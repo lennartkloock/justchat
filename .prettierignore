@@ -6,4 +6,9 @@ bun.lock
 bun.lockb
 
 # Miscellaneous
-/static/
+/static
+/local
+
+# Extensions
+/target
+/extensions
