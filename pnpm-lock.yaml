@@ -36,8 +36,8 @@ importers:
         specifier: ^17.6.0
         version: 17.14.0
       poc-extension:
-        specifier: file:extensions/poc-extension/pkg
-        version: file:extensions/poc-extension/pkg
+        specifier: link:extensions/poc-extension/pkg
+        version: link:extensions/poc-extension/pkg
       prettier:
         specifier: ^3.8.3
         version: 3.9.10
@@ -777,9 +777,6 @@ packages:
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
-
-  poc-extension@file:extensions/poc-extension/pkg:
-    resolution: {directory: extensions/poc-extension/pkg, type: directory}
 
   postcss-load-config@3.1.4:
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
@@ -1643,8 +1640,6 @@ snapshots:
   picocolors@1.1.1: {}
 
   picomatch@4.0.7: {}
-
-  poc-extension@file:extensions/poc-extension/pkg: {}
 
   postcss-load-config@3.1.4(postcss@8.5.32):
     dependencies:

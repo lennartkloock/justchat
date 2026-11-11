@@ -1,30 +1,42 @@
 <script lang="ts">
-    import { greet } from "poc-extension";
+    import pocExtension from "poc-extension?raw";
+    import wasm from "poc-extension/poc_extension_bg.wasm?url";
 
-    async function send() {
-        let res = await fetch("https://api.twitch.tv/helix/chat/messages", {
-            method: "POST",
-            headers: {
-                Authorization: "Bearer",
-                "Client-Id": "",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                broadcaster_id: "416534884",
-                sender_id: "416534884",
-                message: "Hello World",
-            }),
-        });
-        console.log(res);
+    let iframe = $state<HTMLIFrameElement>();
+    const iframeSrc = makeSrc(pocExtension);
+    const channel = new MessageChannel();
+    channel.port1.onmessage = onMessage;
+
+    function makeSrc(code: string): string {
+        const html = `<!doctype html>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval'; connect-src 'none'; img-src data:; style-src 'unsafe-inline'">
+<script type="module">${code}<\/script>`;
+        return URL.createObjectURL(new Blob([html], { type: "text/html" }));
+    }
+
+    function iframeOnLoad() {
+        URL.revokeObjectURL(iframeSrc);
+        console.log("sending init");
+        iframe?.contentWindow?.postMessage({ type: "init" }, "*", [channel.port2]);
+    }
+
+    function onMessage(e: MessageEvent) {
+        console.log("received from extension", e);
     }
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>
-    Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the
-    documentation
-</p>
+<iframe
+    bind:this={iframe}
+    id="extension-iframe"
+    title="Extension"
+    src={iframeSrc}
+    sandbox="allow-scripts"
+    onload={iframeOnLoad}
+></iframe>
 
-<h2>{greet("TEST")}</h2>
-
-<button onclick={send}>Test send</button>
+<style>
+    #extension-iframe {
+        display: none;
+    }
+</style>

@@ -1,8 +1,22 @@
+import { readFileSync } from "node:fs";
 import adapter from "@sveltejs/adapter-auto";
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
 
+const pkg = JSON.parse(readFileSync("./package.json", "utf8"));
+
+// Every dependency linked from ./extensions/*
+const extensions = Object.entries(pkg.dependencies ?? {})
+    .filter(([, spec]) => spec.startsWith("link:extensions/"))
+    .map(([name]) => name);
+
 export default defineConfig({
+    optimizeDeps: {
+        // Disable pre-bundling
+        // https://vite.dev/guide/dep-pre-bundling.html
+        exclude: extensions,
+    },
+    server: { fs: { allow: [".."] } },
     plugins: [
         sveltekit({
             compilerOptions: {
