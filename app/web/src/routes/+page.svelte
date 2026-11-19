@@ -1,6 +1,6 @@
 <script lang="ts">
-    import pocExtension from "poc-extension?raw";
-    import wasm from "poc-extension/poc_extension_bg.wasm?url";
+    // import pocExtension from "poc-extension?raw";
+    // import wasm from "poc-extension/poc_extension_bg.wasm?url";
 
     let iframe = $state<HTMLIFrameElement>();
     const iframeSrc = makeSrc(pocExtension);
