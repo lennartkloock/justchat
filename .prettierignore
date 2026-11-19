@@ -9,6 +9,5 @@ bun.lockb
 /static
 /local
 
-# Extensions
-/target
-/extensions
+# Output
+/app/web/.svelte-kit
