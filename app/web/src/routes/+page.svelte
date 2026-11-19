@@ -1,4 +1,5 @@
 <script lang="ts">
+    import code from "ts-extension?raw";
     //     let iframe = $state<HTMLIFrameElement>();
     //     const iframeSrc = makeSrc(pocExtension);
     //     const channel = new MessageChannel();

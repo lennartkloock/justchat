@@ -16,7 +16,7 @@ export default defineConfig(
 
     // Plain TS packages
     {
-        files: ["packages/**/*.ts"],
+        files: ["extensions/**/*.ts"],
         languageOptions: { globals: globals.browser },
     },
 
